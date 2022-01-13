@@ -1,0 +1,142 @@
+$backgroundBoard:#1f1b24;
+$primaryPurple:#BB86FC;
+$primaryPurpleDark:#3700b3;
+$secondaryTeal :#03DAC5;
+$secondaryTealDark:#018786;
+
+$xSymbol:"X";
+$oSymbol:"O";
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+  background-image: linear-gradient(to right,$primaryPurple,$primaryPurpleDark);
+}
+
+
+.button1 {
+  background-color: #c2fbd7;
+  border-radius: 100px;
+  box-shadow: rgba(44, 187, 99, .2) 0 -25px 18px -14px inset,rgba(44, 187, 99, .15) 0 1px 2px,rgba(44, 187, 99, .15) 0 2px 4px,rgba(44, 187, 99, .15) 0 4px 8px,rgba(44, 187, 99, .15) 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+  color: green;
+  cursor: pointer;
+  display: inline-block;
+  font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
+  padding: 7px 20px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 250ms;
+  border: 0;
+  font-size: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  margin: 5px;
+}
+
+.button1:hover {
+  box-shadow: rgba(44,187,99,.35) 0 -25px 18px -14px inset,rgba(44,187,99,.25) 0 1px 2px,rgba(44,187,99,.25) 0 2px 4px,rgba(44,187,99,.25) 0 4px 8px,rgba(44,187,99,.25) 0 8px 16px,rgba(44,187,99,.25) 0 16px 32px;
+  transform: scale(1.05) rotate(-1deg);
+}
+
+
+
+
+//resetButton
+
+.container{
+    overflow: hidden;
+    position: relative;
+    top: 10%;
+    bottom: 10%;
+    height: fit-content;
+    width: fit-content;
+    margin: auto;
+}
+
+
+
+#grid-container{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: repeat(3,1fr);
+    background-color: $primaryPurpleDark;
+    gap: 1rem;
+    grid-gap: 0.2rem;
+    width: fit-content;
+    margin-top: 2%;
+
+    .grid-item{
+        background-color: $backgroundBoard;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: transform .3s ease-out;
+
+        &:hover{
+          transform: translate(0, -2px);
+        }
+    }
+
+    .xhover::after{
+      content: $xSymbol;
+      color: $primaryPurple;
+    }
+
+    .yhover::after{
+      content: $oSymbol;
+      color: $secondaryTeal;
+    }
+
+    .filled{
+      cursor: not-allowed;
+      &:hover{            //opacity effect on filled element is removed by overwriting the hover effect
+        opacity: 100%;
+      }
+    }
+
+    .xfilled::after{
+      content: $xSymbol;
+      color: $primaryPurple;
+    }
+    .yfilled::after{
+      content:$oSymbol;
+      color: $secondaryTeal;
+    }
+
+}
+
+
+
+
+
+
+//responsive
+
+
+@media (max-width :768px) {
+    .grid-item{
+        height: 150px;
+        width: 150px;
+        font-size: 75px;
+    }
+}
+@media (max-width :480px) {
+  .grid-item{
+      height: 100px;
+      width: 100px;
+      font-size: 50px;
+  }
+}
+
+@media (min-width :768px) {
+  .grid-item{
+      height: 200px;
+      width: 200px;
+      font-size: 100px;
+  }
+}
