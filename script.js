@@ -3,7 +3,9 @@ let currentPlayer = 0
 let moves = 0
 let board = new Array(9)
 let resetButton = document.getElementById('reset')
-
+let showPopUpMessage = document.getElementById('popupMessage')
+let popup1 = document.getElementById('popup1')
+let closePopUp1 = document.getElementById('closePopUp1')
 //reset function
 resetGame = ()=>{
     currentPlayer = 0
@@ -14,6 +16,43 @@ resetGame = ()=>{
     })
 }
 resetButton.addEventListener('click',resetGame)
+
+//function to handel winner of game
+showWinner = (winner)=>{
+    if(winner == 0)
+    showPopUpMessage.innerText = "Player X has Won"
+    else
+    if(winner == 1) 
+    showPopUpMessage.innerText = "Player O has Won"
+    else
+    showPopUpMessage.innerText = "Match Has ended in a tie"
+
+    Array.from(cellGrids).forEach(cell=>{
+        cell.classList.add('filled')
+    })
+    
+    popup1.classList.remove('hidden')
+}
+//close popup
+popup1Close =()=>{
+    popup1.classList.add('hidden')
+}
+
+closePopUp1.addEventListener('click',()=>{
+    popup1Close()
+})
+
+document.addEventListener('keydown',(e)=>{
+    if(e.key == "Escape")
+    popup1Close()
+})
+
+document.addEventListener('click',(e)=>{
+    console.log(e)
+    if(e.target.classList.contains('overlay'))
+        e.target.classList.add('hidden')
+})
+
 
 
 // board functions
@@ -26,7 +65,6 @@ let checkHorizontal = (index)=>{
         if(isNaN(board[i])||board[i] != board[index])
             return false;
     }
-    console.log("Horizontal")
     return true
 }
 
@@ -36,7 +74,6 @@ let checkVertical = (index)=>{
     for(let i = start;i<=end ; i+=3)
         if(isNaN(board[i])||board[i] != board[index])
             return false;
-    console.log("Vertical")
     return true
 }
 
@@ -77,6 +114,8 @@ let mouseOut = (target)=>{
 let mouseClick = (target)=>{
     moves++
     cell = Number(target.id)
+    if(cellGrids[cell].classList.contains('filled'))
+        return
     board[cell] = currentPlayer
     console.log(board)
     if(!currentPlayer)
@@ -86,15 +125,12 @@ let mouseClick = (target)=>{
     
     if(checkWon(cell)){
         //current player has won
-        if(currentPlayer)
-            alert('0 has won')
-        else
-            alert('1 has won')
+       showWinner(currentPlayer)
     }
     else
     if(moves === 9){
         //match tied
-        alert('Match Tied')
+        showWinner(-1)
     }
     else
     {
